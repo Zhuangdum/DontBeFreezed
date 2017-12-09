@@ -229,6 +229,118 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
+    public void showEffect(Vector2 pos, ElementType itemType)
+    {
+        if (!mapDic.ContainsKey(pos)) return;
+        switch (itemType)
+        {
+            case ElementType.Fire:
+                showFireEffect(pos);
+                break;
+            case ElementType.Fuel:
+                showFuelEffect(pos);
+                break;
+            case ElementType.Bomb:
+                showBoombEffect(pos);
+                break;
+                
+        }
+    }
+    
+    public void unShowEffect(Vector2 pos, ElementType itemType)
+    {
+        if (!mapDic.ContainsKey(pos)) return;
+        switch (itemType)
+        {
+            case ElementType.Fire:
+                unShowFireEffect(pos);
+                break;
+            case ElementType.Fuel:
+                unShowFuelEffect(pos);
+                break;
+            case ElementType.Bomb:
+                unShowBoombEffect(pos);
+                break;
+                
+        }
+    }
+
+    private void showFuelEffect(Vector2 pos)
+    {
+        List<Element> list = GetFullNearBy(pos, ElementType.Fuel);
+        foreach (Element ele in list)
+        {
+            setVirtual(ele.pos);   
+        }
+    }
+    
+    private void unShowFuelEffect(Vector2 pos)
+    {
+        List<Element> list = GetFullNearBy(pos, ElementType.Fuel);
+        foreach (Element ele in list)
+        {
+            unSetVirtual(ele.pos);   
+        }
+    }
+
+    private void showBoombEffect(Vector2 pos)
+    {
+        List<Element> list = GetFullNearBy(pos, ElementType.Bomb);
+        foreach (Element ele in list)
+        {
+            setVirtual(ele.pos);   
+        }
+    }
+    
+    private void unShowBoombEffect(Vector2 pos)
+    {
+        List<Element> list = GetFullNearBy(pos, ElementType.Bomb);
+        foreach (Element ele in list)
+        {
+            unSetVirtual(ele.pos);   
+        }
+    }
+    
+    private void showFireEffect(Vector2 pos)
+         {
+             List<Element> list = GetSingleNearBy(pos, ElementType.Fire);
+             foreach (Element ele in list)
+             {
+                  setVirtual(ele.pos);   
+             }
+         }
+    
+    private void unShowFireEffect(Vector2 pos)
+    {
+        List<Element> list = GetSingleNearBy(pos, ElementType.Fire);
+        foreach (Element ele in list)
+        {
+            unSetVirtual(ele.pos);   
+        }
+    }
+
+    private void setVirtual(Vector2 pos)
+    {
+        if (!mapDic.ContainsKey(pos)) return;
+
+        if (mapDic[pos].type == ElementType.Land)
+        {
+            Color color = mapDic[pos].GetComponent<SpriteRenderer>().material.color;
+            mapDic[pos].GetComponent<SpriteRenderer>().material.color = new Color(color.r, color.g, color.b, 0.55f);
+        }
+    }
+    
+    private void unSetVirtual(Vector2 pos)
+    {
+        if (!mapDic.ContainsKey(pos)) return;
+        
+        if (mapDic[pos].type == ElementType.Land)
+        {
+            Color color = mapDic[pos].GetComponent<SpriteRenderer>().material.color;
+            mapDic[pos].GetComponent<SpriteRenderer>().material.color = new Color(color.r, color.g, color.b, 1.0f);
+        }
+    }
+
     public void updateRenderState()
     {
         foreach (var key in mapDic.Keys)

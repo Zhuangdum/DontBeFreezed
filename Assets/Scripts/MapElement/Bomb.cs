@@ -58,6 +58,7 @@ public class Bomb : Element
             {
                 Treasure treasure = item as Treasure;
                 treasure.AddTools();
+                GameManager.instance.mapGenerator.ReplaceElement(item.pos, ElementType.Land, item.state);
                 continue;
             }
             if (item.type == ElementType.Wood)

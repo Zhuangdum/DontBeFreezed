@@ -47,6 +47,10 @@ public class Land : Element
                 continue;
             if (item.type == ElementType.Land)
             {
+                if (reasonType == ElementType.Fire || reasonType == ElementType.Bomb || reasonType == ElementType.Fuel)
+                {
+                    GameManager.instance.mapGenerator.setBlockState(item.pos, ElementState.Warm);
+                }
                 continue;
             }
             if (item.type == ElementType.Fire)
@@ -75,6 +79,7 @@ public class Land : Element
             {
                 Treasure treasure = item as Treasure;
                 treasure.AddTools();
+                GameManager.instance.mapGenerator.ReplaceElement(item.pos, ElementType.Land, item.state);
                 continue;
             }
             if (item.type == ElementType.Wood)
