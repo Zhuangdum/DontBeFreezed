@@ -30,10 +30,10 @@ public class Fire : Element
                 fuel.BeEffected(fuel, ElementType.Fuel);
                 continue;
             }
-            if (item.type == ElementType.Boomb)
+            if (item.type == ElementType.Bomb)
             {
-                Boomb boomb = item as Boomb;
-                boomb.BeEffected(boomb, ElementType.Fire);
+                Bomb bomb = item as Bomb;
+                bomb.BeEffected(bomb, ElementType.Fire);
                 continue;
             }
             if (item.type == ElementType.House)
@@ -51,8 +51,7 @@ public class Fire : Element
                 wood.BeEffected(wood, ElementType.Fire);
                 continue;
             }
-            item.GetComponent<SpriteRenderer>().color = Color.white;
-            item.GetComponent<Element>().type = ElementType.Land;
+            GameManager.instance.mapGenerator.ReplaceElement(item.pos, ElementType.Land, item.state);
         }
     }
 }

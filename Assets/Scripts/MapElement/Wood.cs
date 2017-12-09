@@ -26,7 +26,7 @@ public class Wood : Element
             {
                 continue;
             }
-            if (item.type == ElementType.Boomb)
+            if (item.type == ElementType.Bomb)
             {
                 continue;
             }
@@ -41,22 +41,18 @@ public class Wood : Element
             }
             if (item.type == ElementType.Wood)
             {
-                if (item.pos == this.pos)
+                if (item.pos == this.pos && (reasonType == ElementType.Bomb || reasonType == ElementType.Fuel))
                 {
                     //self
-                    item.GetComponent<SpriteRenderer>().color = Color.white;
-                    item.GetComponent<Element>().type = ElementType.Land;
+                    GameManager.instance.mapGenerator.ReplaceElement(item.pos, ElementType.Land, item.state);
                     continue;
                 }
-                else if (reasonType == ElementType.Boomb || reasonType == ElementType.Fuel)
+                else
                 {
-                    Wood wood = item as Wood;
-                    wood.BeEffected(wood, ElementType.Wood);
                     continue;
                 }
             }
-            item.GetComponent<SpriteRenderer>().color = Color.white;
-            item.GetComponent<Element>().type = ElementType.Land;
+            GameManager.instance.mapGenerator.ReplaceElement(item.pos, ElementType.Land, item.state);
         }
     }
 }

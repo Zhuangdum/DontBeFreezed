@@ -9,6 +9,7 @@ public class ElementConfig : ScriptableObject
     public ElementType type;
     public int radius;
     public Color color;
+    public AudioClip audioClip;
 }
 
 public enum ElementType
@@ -23,6 +24,6 @@ public enum ElementType
     House = 16,
     House1 = 15,
     Wood = 20,
-    Boomb = 31,
+    Bomb = 31,
     Treasure = 42
 }

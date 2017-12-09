@@ -9,10 +9,10 @@ public class Fuel : Element
         UpdateNearby(sourceElement, reasonType);
     }
     
-    private void UpdateNearby(Element sourceElement, ElementType sourceType)
+    private void UpdateNearby(Element sourceElement, ElementType reasonType)
     {
         List<Element> tempList;
-        tempList = GameManager.instance.mapGenerator.GetNearbyBlock(sourceElement, sourceType);
+        tempList = GameManager.instance.mapGenerator.GetNearbyBlock(sourceElement, reasonType);
             
         foreach (var item in tempList)
         {
@@ -27,8 +27,7 @@ public class Fuel : Element
                 if (item.pos == this.pos)
                 {
                     //self
-                    item.GetComponent<SpriteRenderer>().color = Color.white;
-                    item.GetComponent<Element>().type = ElementType.Land;
+                    GameManager.instance.mapGenerator.ReplaceElement(item.pos, ElementType.Land, item.state);
                 }
                 else
                 {
@@ -38,7 +37,7 @@ public class Fuel : Element
                     continue;
                 }
             }
-            if (item.type == ElementType.Boomb)
+            if (item.type == ElementType.Bomb)
             {
                 continue;
             }
@@ -57,8 +56,7 @@ public class Fuel : Element
                 wood.BeEffected(wood, ElementType.Fuel);
                 continue;
             }
-            item.GetComponent<SpriteRenderer>().color = Color.white;
-            item.GetComponent<Element>().type = ElementType.Land;
+            GameManager.instance.mapGenerator.ReplaceElement(item.pos, ElementType.Land, item.state);
         }
     }
 }

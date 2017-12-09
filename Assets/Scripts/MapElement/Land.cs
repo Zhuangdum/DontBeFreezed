@@ -14,6 +14,24 @@ public class Land : Element
         List<Element> tempList;
         tempList = GameManager.instance.mapGenerator.GetNearbyBlock(sourceElement, reasonType);
 
+        if (reasonType == ElementType.Fuel)
+        {
+            if (tempList.Find(s => s.type == ElementType.Fire) == null)
+            {
+                GameManager.instance.mapGenerator.ReplaceElement(sourceElement.pos, ElementType.Fuel, sourceElement.state);
+                return;
+            }
+        }
+        
+        if (reasonType == ElementType.Bomb)
+        {
+            if (tempList.Find(s => s.type == ElementType.Fire))
+            {
+                GameManager.instance.mapGenerator.ReplaceElement(sourceElement.pos, ElementType.Fuel, sourceElement.state);
+                return;
+            }
+        }
+        
         foreach (var item in tempList)
         {
             if (item.type == ElementType.Trap)
@@ -25,13 +43,13 @@ public class Land : Element
             if (item.type == ElementType.Fuel)
             {
                 Fuel fuel = item as Fuel;
-                fuel.BeEffected(fuel, ElementType.Fire);
+                fuel.BeEffected(fuel, reasonType);
                 continue;
             }
-            if (item.type == ElementType.Boomb)
+            if (item.type == ElementType.Bomb)
             {
-                Boomb boomb = item as Boomb;
-                boomb.BeEffected(boomb, ElementType.Fire);
+                Bomb bomb = item as Bomb;
+                bomb.BeEffected(bomb, ElementType.Fire);
                 continue;
             }
             if (item.type == ElementType.House)
@@ -49,15 +67,14 @@ public class Land : Element
                 {
                     continue;
                 }
-                else if(reasonType == ElementType.Boomb || reasonType == ElementType.Fuel)
+                else if(reasonType == ElementType.Bomb || reasonType == ElementType.Fuel)
                 {
                     Wood wood = item as Wood;
-                    wood.BeEffected(wood, ElementType.Wood);
+                    wood.BeEffected(wood, reasonType);
                     continue;
                 }
             }
-            item.GetComponent<SpriteRenderer>().color = Color.white;
-            item.GetComponent<Element>().type = ElementType.Land;
+            GameManager.instance.mapGenerator.ReplaceElement(item.pos, ElementType.Land, item.state);
         }
     }
 }

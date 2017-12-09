@@ -11,9 +11,20 @@ public class GameManager : MonoBehaviour
 
     public MapGenerator mapGenerator;
 
+    public UIManager uiManager;
+
+    private Dictionary<ElementType, int> tools;
+    public int fireCount = 3;
+    public int fuelCount = 3;
+    public int boombCount = 3;
     private void Awake()
     {
         instance = this;
+        tools = new Dictionary<ElementType, int>();
+        tools.Add(ElementType.Fire, fireCount);
+        tools.Add(ElementType.Fuel, fuelCount);
+        tools.Add(ElementType.Bomb, boombCount);
+        uiManager.Init();
     }
 
     private void Update()
@@ -34,14 +45,27 @@ public class GameManager : MonoBehaviour
                     }
                     else if(clickedElement.type == ElementType.Land)
                     {
-                        Land land = clickedElement as Land;
-                        if (land == null)
-                            Debug.LogError("xxxx");
-                        land.BeEffected(land, ElementType.Fire);
+                        
+                        if (tools.ContainsKey(uiManager.handType) && tools[uiManager.handType] >= 0)
+                        {
+                            Land land = clickedElement as Land;
+                            if (land == null)
+                            {
+                                Debug.LogError("xxxx");
+                                return;
+                            }
+                            land.BeEffected(land, uiManager.handType);
+                            tools[uiManager.handType]--;
+                            Debug.Log(" 使用道具类型： "+ uiManager.handType+"  道具数量： "+tools[uiManager.handType]);
+                        }
+                        else
+                        {
+                            Debug.Log(" 道具数量不足 "+ uiManager.handType);
+                        }
                     }
                     else
                     {
-                        Debug.Log("this has some tools already");
+                        Debug.Log("this place already have something");
                     }
                 }
             }

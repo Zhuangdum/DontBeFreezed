@@ -10,7 +10,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace>
     </RootNamespace>
-    <ProjectGuid>{E2352147-0372-8ECE-7755-A6231A026217}</ProjectGuid>
+    <ProjectGuid>{0C06DD1E-930C-692A-4D77-F3E50A57FE86}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -50,10 +50,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\AudioManager.cs" />
     <Compile Include="Assets\Scripts\Config\ElementConfig.cs" />
     <Compile Include="Assets\Scripts\Config\ElementMenu.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
-    <Compile Include="Assets\Scripts\MapElement\Boomb.cs" />
+    <Compile Include="Assets\Scripts\MapElement\Bomb.cs" />
     <Compile Include="Assets\Scripts\MapElement\Element.cs" />
     <Compile Include="Assets\Scripts\MapElement\Fire.cs" />
     <Compile Include="Assets\Scripts\MapElement\Fuel.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Assets\Scripts\MapElement\Wood.cs" />
     <Compile Include="Assets\Scripts\MapGenerator.cs" />
     <Compile Include="Assets\Scripts\ReadMap.cs" />
+    <Compile Include="Assets\Scripts\UIManager.cs" />
     <Reference Include="UnityEngine.UI">
       <HintPath>/Applications/Unity5.5.4/Unity5.5.4.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
     </Reference>

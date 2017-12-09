@@ -12,7 +12,7 @@ public class MapGenerator : MonoBehaviour
     //行
     private int column = 20;
 
-    private GameObject Map;
+    private GameObject map;
 
     private Vector2 bounds;
     
@@ -24,7 +24,7 @@ public class MapGenerator : MonoBehaviour
         var datas = csvConvert.loadMap(string.Format("Assets/CSV/{0}.csv", mapName));
 
         bounds = new Vector2(row, column);
-        Map = new GameObject("Map");
+        map = new GameObject("Map");
         for (int x = column-1; x >=0 ; x--)
         {
             for (int y = 0; y < row ; y++)
@@ -45,7 +45,7 @@ public class MapGenerator : MonoBehaviour
                     Debug.LogError(type);
                 
                 //instantiate gamobject
-                GameObject go = Instantiate(config.prefab, Map.transform);
+                GameObject go = Instantiate(config.prefab, map.transform);
                 go.transform.position = tempPos;
                 go.GetComponent<SpriteRenderer>().color = config.color;
                 var ui = go.GetComponentInChildren<Text>();
@@ -77,8 +77,10 @@ public class MapGenerator : MonoBehaviour
             return GetFullNearBy(sourceElement.pos, ElementType.Fuel);
         if(sourceElement.type == ElementType.Wood)
             return GetSingleNearBy(sourceElement.pos, ElementType.Wood);
-        if(sourceElement.type == ElementType.Boomb)
-            return GetFullNearBy(sourceElement.pos, ElementType.Boomb);
+        if(sourceElement.type == ElementType.Bomb)
+            return GetFullNearBy(sourceElement.pos, ElementType.Bomb);
+        if(sourceElement.type == ElementType.Land)
+            return GetFullNearBy(sourceElement.pos, reasonType);
         return GetSingleNearBy(sourceElement.pos, ElementType.Fire);
     }    
 
@@ -130,5 +132,48 @@ public class MapGenerator : MonoBehaviour
             }
         }
         return rocks;
+    }
+
+    public void ReplaceElement(Vector2 targetPos, ElementType newType, ElementState newState)
+    {
+        if (mapDic.ContainsKey(targetPos))
+        {
+            Destroy(mapDic[targetPos].gameObject);
+            mapDic[targetPos] = GetElement(newType, targetPos, newState);
+        }
+        else
+        {
+            Debug.LogError("map do not contain this element, targetpos: "+targetPos);
+        }
+    }
+
+    private Element GetElement(ElementType elementType, Vector2 pos, ElementState state)
+    {
+        Vector2 tempPos = pos;
+        ElementType type = elementType;
+                
+        ElementConfig config;
+        if (type == ElementType.Default)
+        {
+            config = GameManager.instance.configMenu.configList.Find(s=>s.type == ElementType.Land);
+        }
+        else
+            config = GameManager.instance.configMenu.configList.Find(s => s.type == type);
+
+        if(config == null)
+            Debug.LogError(type);
+                
+        //instantiate gamobject
+        GameObject go = Instantiate(config.prefab, map.transform);
+        go.transform.position = tempPos;
+        go.GetComponent<SpriteRenderer>().color = config.color;
+        var ui = go.GetComponentInChildren<Text>();
+        ui.text = string.Format("{0}{1}", tempPos.x, tempPos.y);
+        ui.enabled = false;
+        Element element = go.GetComponent<Element>();
+        element.pos = tempPos;
+        element.state = state;
+        
+        return element;
     }
 }

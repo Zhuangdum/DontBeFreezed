@@ -32,10 +32,10 @@ public class Element : MonoBehaviour
                 fuel.BeEffected(fuel, ElementType.Fuel);
                 continue;
             }
-            if (item.type == ElementType.Boomb)
+            if (item.type == ElementType.Bomb)
             {
-                Boomb boomb = item as Boomb;
-                boomb.BeEffected(boomb, ElementType.Boomb);
+                Bomb bomb = item as Bomb;
+                bomb.BeEffected(bomb, ElementType.Bomb);
                 continue;
             }
             if (item.type == ElementType.House)
