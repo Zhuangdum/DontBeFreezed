@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     public void Init()
     {
         handType = ElementType.Fire;
+        HideChoice();
     }
 
     public void SetFire()
@@ -35,5 +36,31 @@ public class UIManager : MonoBehaviour
     {
         handType = type;
         Debug.Log("set handitem to: "+ type);
+    }
+
+    public GameObject choicePanel;
+
+    public void Confirm()
+    {
+        //TODO
+        
+        HideChoice();
+    }
+
+    public void Cancel()
+    {
+        //TODO
+        
+        HideChoice();
+    }
+
+    public void ShowChoice()
+    {
+        choicePanel.SetActive(true);
+    }
+
+    public void HideChoice()
+    {
+        choicePanel.SetActive(false);
     }
 }
