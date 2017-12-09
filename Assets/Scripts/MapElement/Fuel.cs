@@ -16,12 +16,19 @@ public class Fuel : Element
             
         foreach (var item in tempList)
         {
+            if (item.pos == this.pos)
+            {
+                GameManager.instance.mapGenerator.ReplaceElement(item.pos, ElementType.Land, item.state);
+                continue;
+            }
             if(item.type == ElementType.Trap)
                 continue;
             if(item.type == ElementType.Land)
                 continue;
             if (item.type == ElementType.Fire)
+            {
                 continue;
+            }
             if (item.type == ElementType.Fuel)
             {
                 if (item.pos == this.pos)

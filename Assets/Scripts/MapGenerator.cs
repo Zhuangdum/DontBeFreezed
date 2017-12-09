@@ -80,8 +80,35 @@ public class MapGenerator : MonoBehaviour
         if(sourceElement.type == ElementType.Bomb)
             return GetFullNearBy(sourceElement.pos, ElementType.Bomb);
         if(sourceElement.type == ElementType.Land)
-            return GetFullNearBy(sourceElement.pos, reasonType);
+            if(reasonType == ElementType.Fire)
+                return GetSingleNearBy(sourceElement.pos, ElementType.Fire);
+            else
+                return GetFullNearBy(sourceElement.pos, reasonType);
         return GetSingleNearBy(sourceElement.pos, ElementType.Fire);
+    }   
+    
+    public List<Element> GetNearbyBlock3x3(Vector2 targetPos)
+    {
+        int radius = 3;
+        List<Element> rocks = new List<Element>();
+
+        if (radius / 2 == 0)
+        {
+            Debug.LogError("radius value can not be double");
+            return rocks;
+        }
+        for (int i = -radius/2; i <= radius/2; i++)
+        {
+            for (int j = -radius/2; j <= radius/2; j++)
+            {
+                Element element;
+                if (mapDic.TryGetValue(new Vector2(targetPos.x + j, targetPos.y+i), out element))
+                {
+                    rocks.Add(element);
+                }
+            }
+        }
+        return rocks;
     }    
 
     private List<Element> GetSingleNearBy(Vector2 pos, ElementType sourceType)

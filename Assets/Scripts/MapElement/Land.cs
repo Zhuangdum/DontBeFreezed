@@ -14,9 +14,12 @@ public class Land : Element
         List<Element> tempList;
         tempList = GameManager.instance.mapGenerator.GetNearbyBlock(sourceElement, reasonType);
 
+        
+        
         if (reasonType == ElementType.Fuel)
         {
-            if (tempList.Find(s => s.type == ElementType.Fire) == null)
+            List<Element> list3x3 = GameManager.instance.mapGenerator.GetNearbyBlock3x3(sourceElement.pos);
+            if (list3x3.Find(s => s.type == ElementType.Fire) == null)
             {
                 GameManager.instance.mapGenerator.ReplaceElement(sourceElement.pos, ElementType.Fuel, sourceElement.state);
                 return;
@@ -25,15 +28,21 @@ public class Land : Element
         
         if (reasonType == ElementType.Bomb)
         {
-            if (tempList.Find(s => s.type == ElementType.Fire))
+            List<Element> list3x3 = GameManager.instance.mapGenerator.GetNearbyBlock3x3(sourceElement.pos);
+            if (list3x3.Find(s => s.type == ElementType.Fire) == null)
             {
-                GameManager.instance.mapGenerator.ReplaceElement(sourceElement.pos, ElementType.Fuel, sourceElement.state);
+                GameManager.instance.mapGenerator.ReplaceElement(sourceElement.pos, ElementType.Bomb, sourceElement.state);
                 return;
             }
         }
         
         foreach (var item in tempList)
         {
+            if (item.pos == this.pos)
+            {
+                GameManager.instance.mapGenerator.ReplaceElement(sourceElement.pos, (reasonType == ElementType.Bomb || reasonType == ElementType.Fuel)?ElementType.Land:reasonType, sourceElement.state);
+                continue;
+            }
             if (item.type == ElementType.Trap)
                 continue;
             if (item.type == ElementType.Land)

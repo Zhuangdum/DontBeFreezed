@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
                     else if(clickedElement.type == ElementType.Land)
                     {
                         
-                        if (tools.ContainsKey(uiManager.handType) && tools[uiManager.handType] >= 0)
+                        if (tools.ContainsKey(uiManager.handType) && tools[uiManager.handType] > 0)
                         {
                             Land land = clickedElement as Land;
                             if (land == null)
