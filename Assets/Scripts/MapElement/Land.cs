@@ -46,8 +46,14 @@ public class Land : Element
             if (item.type == ElementType.Trap)
                 continue;
             if (item.type == ElementType.Land)
+            {
                 continue;
+            }
             if (item.type == ElementType.Fire)
+                continue;
+            if (item.type == ElementType.Stone1)
+                continue;
+            if (item.type == ElementType.Stone2)
                 continue;
             if (item.type == ElementType.Fuel)
             {
@@ -67,7 +73,8 @@ public class Land : Element
             }
             if (item.type == ElementType.Treasure)
             {
-                Debug.Log("获得宝箱一个， 里面还有各种资源");
+                Treasure treasure = item as Treasure;
+                treasure.AddTools();
                 continue;
             }
             if (item.type == ElementType.Wood)

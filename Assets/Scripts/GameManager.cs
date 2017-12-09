@@ -13,18 +13,45 @@ public class GameManager : MonoBehaviour
 
     public UIManager uiManager;
 
-    private Dictionary<ElementType, int> tools;
-    public int fireCount = 3;
-    public int fuelCount = 3;
-    public int boombCount = 3;
+    public Dictionary<ElementType, int> tools;
+    public int fireCount {
+        set
+        {
+            uiManager.fireText.text = tools[ElementType.Fire].ToString();
+        }
+    }
+    public int fuelCount {
+        set
+        {
+            uiManager.fuelText.text = tools[ElementType.Fuel].ToString();
+        }
+    }
+    public int boombCount {
+        set
+        {
+            uiManager.bombText.text = tools[ElementType.Bomb].ToString();
+        }
+    }
     private void Awake()
     {
         instance = this;
+        
         tools = new Dictionary<ElementType, int>();
-        tools.Add(ElementType.Fire, fireCount);
-        tools.Add(ElementType.Fuel, fuelCount);
-        tools.Add(ElementType.Bomb, boombCount);
+        tools.Add(ElementType.Fire, 3);
+        tools.Add(ElementType.Fuel, 3);
+        tools.Add(ElementType.Bomb, 3);
+        
+        //set ui
         uiManager.Init();
+        SetUIDirty();
+    }
+
+    public void SetUIDirty()
+    {
+        //set ui dirty
+        fireCount = 0;
+        fuelCount = 0;
+        boombCount = 0;
     }
 
     private void Update()
@@ -56,6 +83,7 @@ public class GameManager : MonoBehaviour
                             }
                             land.BeEffected(land, uiManager.handType);
                             tools[uiManager.handType]--;
+                            SetUIDirty();
                             Debug.Log(" 使用道具类型： "+ uiManager.handType+"  道具数量： "+tools[uiManager.handType]);
                         }
                         else

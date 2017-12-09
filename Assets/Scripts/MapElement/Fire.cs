@@ -8,17 +8,24 @@ public class Fire : Element
     {
         UpdateNearby(sourceElement, reasonType);
     }
-    
+
     private void UpdateNearby(Element sourceElement, ElementType reasonType)
     {
         List<Element> tempList;
         tempList = GameManager.instance.mapGenerator.GetNearbyBlock(sourceElement, reasonType);
-            
+
         foreach (var item in tempList)
         {
-            if(item.type == ElementType.Trap)
+            if (item.type == ElementType.Trap)
                 continue;
-            if(item.type == ElementType.Land)
+            if (item.type == ElementType.Land)
+            {
+                item.state = ElementState.Warm;
+                continue;
+            }
+            if (item.type == ElementType.Stone1)
+                continue;
+            if (item.type == ElementType.Stone2)
                 continue;
             if (item.type == ElementType.Fire)
             {
@@ -42,7 +49,8 @@ public class Fire : Element
             }
             if (item.type == ElementType.Treasure)
             {
-                Debug.Log("获得宝箱一个， 里面还有各种资源");
+                Treasure treasure = item as Treasure;
+                treasure.AddTools();
                 continue;
             }
             if (item.type == ElementType.Wood)
@@ -50,6 +58,40 @@ public class Fire : Element
                 Wood wood = item as Wood;
                 wood.BeEffected(wood, ElementType.Fire);
                 continue;
+            }
+
+            //判断遮挡
+            if (item.pos.x == 2)
+            {
+                Element element =
+                    GameManager.instance.mapGenerator.GetTargetElement(new Vector2(item.pos.x - 1, item.pos.y));
+                if (element.type == ElementType.House || element.type == ElementType.House1 ||
+                    element.type == ElementType.Stone1 || element.type == ElementType.Stone2)
+                    continue;
+            }
+            if (item.pos.x == -2)
+            {
+                Element element =
+                    GameManager.instance.mapGenerator.GetTargetElement(new Vector2(item.pos.x + 1, item.pos.y));
+                if (element.type == ElementType.House || element.type == ElementType.House1 ||
+                    element.type == ElementType.Stone1 || element.type == ElementType.Stone2)
+                    continue;
+            }
+            if (item.pos.y == 2)
+            {
+                Element element =
+                    GameManager.instance.mapGenerator.GetTargetElement(new Vector2(item.pos.x, item.pos.y-1));
+                if (element.type == ElementType.House || element.type == ElementType.House1 ||
+                    element.type == ElementType.Stone1 || element.type == ElementType.Stone2)
+                    continue;
+            }
+            if (item.pos.x == -2)
+            {
+                Element element =
+                    GameManager.instance.mapGenerator.GetTargetElement(new Vector2(item.pos.x, item.pos.y+1));
+                if (element.type == ElementType.House || element.type == ElementType.House1 ||
+                    element.type == ElementType.Stone1 || element.type == ElementType.Stone2)
+                    continue;
             }
             GameManager.instance.mapGenerator.ReplaceElement(item.pos, ElementType.Land, item.state);
         }

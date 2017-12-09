@@ -1,10 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     public ElementType handType;
+
+    public Text fireText;
+    public Text fuelText;
+    public Text bombText;
 
     public void Init()
     {

@@ -2,10 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Element : MonoBehaviour 
+public class Element : MonoBehaviour
 {
+    public Color warmColor;
     public Vector2 pos;
-    public ElementState state;
+    public ElementState _state;
+    public virtual ElementState state {
+        get { return _state; }
+        set
+        {
+            _state = value;
+            if (_state == ElementState.Warm)
+            {
+//                GetComponent<SpriteRenderer>().material.color = warmColor;
+            }
+            else
+            {
+                
+            }
+        }
+    }
     public ElementType type;
 
     public virtual void BeEffected(Element sourceElement, ElementType reasonType)
@@ -44,7 +60,8 @@ public class Element : MonoBehaviour
             }
             if (item.type == ElementType.Treasure)
             {
-                Debug.Log("获得宝箱一个， 里面还有各种资源");
+                Treasure treasure = item as Treasure;
+                treasure.AddTools();
                 continue;
             }
             if (item.type == ElementType.Wood)
@@ -63,6 +80,6 @@ public class Element : MonoBehaviour
 public enum ElementState
 {
     Freezed = 0,
-    UnFreezed = 1,
+    Warm = 1,
     Other = 2
 }

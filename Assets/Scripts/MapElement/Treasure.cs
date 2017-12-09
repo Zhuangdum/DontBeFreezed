@@ -8,4 +8,14 @@ public class Treasure : Element
     {
         base.BeEffected(sourceElement, reasonType);
     }
+
+    public void AddTools()
+    {
+        GameManager.instance.tools[ElementType.Fire] += 2;
+        GameManager.instance.tools[ElementType.Fuel] += 2;
+        GameManager.instance.tools[ElementType.Bomb] += 2;
+        
+        GameManager.instance.SetUIDirty();
+    }
+
 }
