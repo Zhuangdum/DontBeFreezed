@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class MapGenerator : MonoBehaviour
 {
@@ -228,4 +229,26 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
+    public void updateRenderState()
+    {
+        foreach (var key in mapDic.Keys)
+        {
+            if (mapDic[key].state == ElementState.Warm)
+            {
+                if (mapDic[key].type == ElementType.Land)
+                {
+                    Color color = mapDic[key].GetComponent<SpriteRenderer>().material.color;
+                    mapDic[key].GetComponent<SpriteRenderer>().material.color = new Color(color.r, color.g, color.b, 0.25f);
+                }
+            }
+        }
+    }
+
+    public void setBlockState(Vector2 pos, ElementState state)
+    {
+        if (mapDic.ContainsKey(pos))
+        {
+            mapDic[pos].state = state;
+        }
+    }
 }

@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    private static int fireNum = 15;
+    private static int fuelNum = 3;
+    private static int bombNum = 3;
     public ElementMenu configMenu;
 
     public static GameManager instance;
@@ -37,9 +40,9 @@ public class GameManager : MonoBehaviour
         instance = this;
         
         tools = new Dictionary<ElementType, int>();
-        tools.Add(ElementType.Fire, 3);
-        tools.Add(ElementType.Fuel, 3);
-        tools.Add(ElementType.Bomb, 3);
+        tools.Add(ElementType.Fire, fireNum);
+        tools.Add(ElementType.Fuel, fuelNum);
+        tools.Add(ElementType.Bomb, bombNum);
         
         //set ui
         uiManager.Init();
@@ -98,7 +101,7 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+        
+        mapGenerator.updateRenderState();
     }
-
-    
 }
