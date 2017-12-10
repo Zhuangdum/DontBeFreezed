@@ -22,17 +22,11 @@ public class MapGenerator : MonoBehaviour
 
     public string mapName;
 
-    
+    public int freezedNum ;
 
     private void Awake()
     {
-//        snowland = Resources.Load<Texture2D>("Assets/sprite/xuedi_00.png");
-//        grassland = Resources.Load<Texture2D>("Assets/sprite/caodi_00");
-//        if (grassland == null)
-//        {
-//            Debug.logger.Log("fuck123");
-//        }
-        
+        freezedNum = row * column;
     }
 
     private void Start()
@@ -190,6 +184,7 @@ public class MapGenerator : MonoBehaviour
                 tempElement.state = ElementState.Warm;
             }
             mapDic[targetPos] = tempElement;
+            AudioSource.PlayClipAtPoint(AudioManager.instance.putClip, new Vector3(0,0,0));
         }
         else
         {
@@ -357,6 +352,7 @@ public class MapGenerator : MonoBehaviour
 
     public void updateRenderState()
     {
+        freezedNum = 0;
         foreach (var key in mapDic.Keys)
         {
             if (mapDic[key].state == ElementState.Warm)
@@ -369,6 +365,11 @@ public class MapGenerator : MonoBehaviour
                     mapDic[key].GetComponent<SpriteRenderer>().sprite = GameManager.instance.grassland;
                     mapDic[key].GetComponent<SpriteRenderer>().sortingOrder = 50 - (int)mapDic[key].pos.y;
                 }
+            }
+
+            if (mapDic[key].state == ElementState.Freezed)
+            {
+                freezedNum++;
             }
         }
     }

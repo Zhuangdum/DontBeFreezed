@@ -21,7 +21,7 @@ public class Land : Element
             List<Element> list3x3 = GameManager.instance.mapGenerator.GetNearbyBlock3x3(sourceElement.pos);
             if (list3x3.Find(s => s.type == ElementType.Fire) == null)
             {
-                GameManager.instance.mapGenerator.ReplaceElement(sourceElement.pos, ElementType.Fuel, sourceElement.state);
+                GameManager.instance.mapGenerator.ReplaceElement(sourceElement.pos, ElementType.Land, ElementState.Warm);
                 return;
             }
         }
@@ -31,7 +31,7 @@ public class Land : Element
             List<Element> list3x3 = GameManager.instance.mapGenerator.GetNearbyBlock3x3(sourceElement.pos);
             if (list3x3.Find(s => s.type == ElementType.Fire) == null)
             {
-                GameManager.instance.mapGenerator.ReplaceElement(sourceElement.pos, ElementType.Bomb, sourceElement.state);
+                GameManager.instance.mapGenerator.ReplaceElement(sourceElement.pos, ElementType.Land, ElementState.Warm);
                 return;
             }
         }
@@ -40,11 +40,20 @@ public class Land : Element
         {
             if (item.pos == this.pos)
             {
+                if (reasonType == ElementType.Fire)
+                {
+                    AudioSource.PlayClipAtPoint(AudioManager.instance.fireClip, new Vector3(0,0,0));
+                    GameManager.instance.mapGenerator.ReplaceElement(sourceElement.pos, ElementType.Fire, ElementState.Warm);
+                    continue;
+                }
                 GameManager.instance.mapGenerator.ReplaceElement(sourceElement.pos, (reasonType == ElementType.Bomb || reasonType == ElementType.Fuel)?ElementType.Land:reasonType, sourceElement.state);
                 continue;
             }
             if (item.type == ElementType.Trap)
+            {
                 continue;
+            }
+                
             if (item.type == ElementType.Land)
             {
                 if (reasonType == ElementType.Fire || reasonType == ElementType.Bomb || reasonType == ElementType.Fuel)
@@ -62,15 +71,21 @@ public class Land : Element
             if (item.type == ElementType.Fuel)
             {
                 Fuel fuel = GameManager.instance.mapGenerator.GetTargetElement(item.pos) as Fuel;
-                if(fuel !=null)
+                if (fuel != null)
+                {
+                    AudioSource.PlayClipAtPoint(AudioManager.instance.fuelClip, new Vector3(0,0,0));
                     fuel.BeEffected(fuel, reasonType);
+                }
                 continue;
             }
             if (item.type == ElementType.Bomb)
             {
                 Bomb bomb = GameManager.instance.mapGenerator.GetTargetElement(item.pos) as Bomb;
-                if(bomb !=null)
-                    bomb.BeEffected(bomb, ElementType.Fire);
+                if (bomb != null)
+                {
+                    AudioSource.PlayClipAtPoint(AudioManager.instance.bombClip, new Vector3(0,0,0));
+                    bomb.BeEffected(bomb, ElementType.Fire); 
+                }
                 continue;
             }
             if (item.type == ElementType.House)
