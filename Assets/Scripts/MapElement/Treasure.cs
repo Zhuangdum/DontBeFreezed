@@ -17,6 +17,7 @@ public class Treasure : Element
 
     public void AddTools()
     {
+        AudioSource.PlayClipAtPoint(AudioManager.instance.treasureClip, new Vector3(0,0,0));
         int random = Random.Range(0, 3);
         if (random == 0)
         {

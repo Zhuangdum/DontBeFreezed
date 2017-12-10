@@ -99,11 +99,8 @@ public class GameManager : MonoBehaviour
             if (hitInfo.collider.CompareTag("Rock"))
             {
                 Element clickedElement = hitInfo.collider.GetComponent<Element>();
-                if (clickedElement.type == ElementType.Trap)
-                {
-                    return;
-                }
-                else if (clickedElement.type == ElementType.Land)
+
+                if (clickedElement.type == ElementType.Land)
                 {
                     if (tools.ContainsKey(uiManager.handType) && tools[uiManager.handType] > 0)
                     {
@@ -141,6 +138,7 @@ public class GameManager : MonoBehaviour
                 {
                     Trap trap = clickedElement as Trap;
                     trap.ShowTrap();
+                    AudioSource.PlayClipAtPoint(AudioManager.instance.trapClip, new Vector3(0,0,0));
                     return;
                 }
                 else if(clickedElement.type == ElementType.Land)
@@ -148,6 +146,7 @@ public class GameManager : MonoBehaviour
                         
                     if (tools.ContainsKey(uiManager.handType) && tools[uiManager.handType] > 0)
                     {
+                        
                         Land land = clickedElement as Land;
                         if (land == null)
                         {
