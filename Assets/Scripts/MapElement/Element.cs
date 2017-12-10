@@ -74,6 +74,7 @@ public class Element : MonoBehaviour
             item.GetComponent<Element>().type = ElementType.Land;
         }
     }
+
 }
 
 

@@ -36,8 +36,6 @@ public class Wood : Element
             }
             if (item.type == ElementType.Treasure)
             {
-                Treasure treasure = item as Treasure;
-                treasure.AddTools();
                 continue;
             }
             if (item.type == ElementType.Wood)
@@ -50,7 +48,13 @@ public class Wood : Element
                 }
                 else
                 {
-                    continue;
+                    if (reasonType == ElementType.Fuel)
+                    {
+                        Wood wood = GameManager.instance.mapGenerator.GetTargetElement(item.pos) as Wood;
+                        if(wood !=null)
+                            wood.BeEffected(wood, reasonType);
+                        continue;
+                    }
                 }
             }
             GameManager.instance.mapGenerator.ReplaceElement(item.pos, ElementType.Land, item.state);

@@ -18,6 +18,10 @@
             <e p="ElementConfig.cs" t="Include" />
             <e p="ElementMenu.cs" t="Include" />
           </e>
+          <e p="Effect" t="Include">
+            <e p="EffectController.cs" t="Include" />
+          </e>
+          <e p="EffectManager.cs" t="Include" />
           <e p="GameManager.cs" t="Include" />
           <e p="MapElement" t="Include">
             <e p="Bomb.cs" t="Include" />

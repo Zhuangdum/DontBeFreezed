@@ -39,8 +39,9 @@ public class Fire : Element
             }
             if (item.type == ElementType.Bomb)
             {
-                Bomb bomb = item as Bomb;
-                bomb.BeEffected(bomb, ElementType.Fire);
+                Bomb bomb = GameManager.instance.mapGenerator.GetTargetElement(item.pos) as Bomb;
+                if(bomb !=null)
+                    bomb.BeEffected(bomb, ElementType.Fire);
                 continue;
             }
             if (item.type == ElementType.House)
@@ -49,15 +50,17 @@ public class Fire : Element
             }
             if (item.type == ElementType.Treasure)
             {
-                Treasure treasure = item as Treasure;
-                treasure.AddTools();
+                Treasure treasure = GameManager.instance.mapGenerator.GetTargetElement(item.pos) as Treasure;
+                if(treasure !=null)
+                    treasure.AddTools();
                 GameManager.instance.mapGenerator.ReplaceElement(item.pos, ElementType.Land, item.state);
                 continue;
             }
             if (item.type == ElementType.Wood)
             {
-                Wood wood = item as Wood;
-                wood.BeEffected(wood, ElementType.Fire);
+                Wood wood = GameManager.instance.mapGenerator.GetTargetElement(item.pos) as Wood;
+                if(wood !=null)
+                    wood.BeEffected(wood, ElementType.Fire);
                 continue;
             }
 

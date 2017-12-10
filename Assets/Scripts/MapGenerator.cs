@@ -173,7 +173,6 @@ public class MapGenerator : MonoBehaviour
             if (newType == ElementType.Land)
             {
                 tempElement.state = ElementState.Warm;
-                
             }
             mapDic[targetPos] = tempElement;
         }

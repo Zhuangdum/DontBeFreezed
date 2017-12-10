@@ -14,6 +14,8 @@ public class Bomb : Element
         List<Element> tempList;
         tempList = GameManager.instance.mapGenerator.GetNearbyBlock(sourceElement, reasonType);
 
+        GameManager.instance.effectManager.PlayEffect(ElementType.Bomb, tempList);
+        
         foreach (var item in tempList)
         {
             if (item.pos == this.pos)
@@ -32,8 +34,9 @@ public class Bomb : Element
                 continue;
             if (item.type == ElementType.Fuel)
             {
-                Fuel fuel = item as Fuel;
-                fuel.BeEffected(fuel, ElementType.Bomb);
+                Fuel fuel = GameManager.instance.mapGenerator.GetTargetElement(item.pos) as Fuel;
+                if(fuel !=null)
+                    fuel.BeEffected(fuel, ElementType.Bomb);
                 continue;
             }
             if (item.type == ElementType.Bomb)
@@ -45,8 +48,9 @@ public class Bomb : Element
                 }
                 else
                 {
-                    Bomb bomb = item as Bomb;
-                    bomb.BeEffected(bomb, ElementType.Bomb);
+                    Bomb bomb = GameManager.instance.mapGenerator.GetTargetElement(item.pos) as Bomb;
+                    if(bomb !=null)
+                        bomb.BeEffected(bomb, ElementType.Bomb);
                     continue;
                 }
             }
@@ -56,8 +60,9 @@ public class Bomb : Element
             }
             if (item.type == ElementType.Treasure)
             {
-                Treasure treasure = item as Treasure;
-                treasure.AddTools();
+                Treasure treasure = GameManager.instance.mapGenerator.GetTargetElement(item.pos) as Treasure;
+                if(treasure !=null)
+                    treasure.AddTools();
                 GameManager.instance.mapGenerator.ReplaceElement(item.pos, ElementType.Land, item.state);
                 continue;
             }
@@ -69,8 +74,9 @@ public class Bomb : Element
                 }
                 else
                 {
-                    Wood wood = item as Wood;
-                    wood.BeEffected(wood, ElementType.Bomb);
+                    Wood wood = GameManager.instance.mapGenerator.GetTargetElement(item.pos) as Wood;
+                    if(wood !=null)
+                        wood.BeEffected(wood, ElementType.Bomb);
                     continue;
                 }
             }

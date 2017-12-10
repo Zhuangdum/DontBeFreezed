@@ -53,6 +53,8 @@
     <Compile Include="Assets\Scripts\AudioManager.cs" />
     <Compile Include="Assets\Scripts\Config\ElementConfig.cs" />
     <Compile Include="Assets\Scripts\Config\ElementMenu.cs" />
+    <Compile Include="Assets\Scripts\Effect\EffectController.cs" />
+    <Compile Include="Assets\Scripts\EffectManager.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\MapElement\Bomb.cs" />
     <Compile Include="Assets\Scripts\MapElement\Element.cs" />

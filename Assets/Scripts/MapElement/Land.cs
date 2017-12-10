@@ -61,14 +61,16 @@ public class Land : Element
                 continue;
             if (item.type == ElementType.Fuel)
             {
-                Fuel fuel = item as Fuel;
-                fuel.BeEffected(fuel, reasonType);
+                Fuel fuel = GameManager.instance.mapGenerator.GetTargetElement(item.pos) as Fuel;
+                if(fuel !=null)
+                    fuel.BeEffected(fuel, reasonType);
                 continue;
             }
             if (item.type == ElementType.Bomb)
             {
-                Bomb bomb = item as Bomb;
-                bomb.BeEffected(bomb, ElementType.Fire);
+                Bomb bomb = GameManager.instance.mapGenerator.GetTargetElement(item.pos) as Bomb;
+                if(bomb !=null)
+                    bomb.BeEffected(bomb, ElementType.Fire);
                 continue;
             }
             if (item.type == ElementType.House)
@@ -77,8 +79,9 @@ public class Land : Element
             }
             if (item.type == ElementType.Treasure)
             {
-                Treasure treasure = item as Treasure;
-                treasure.AddTools();
+                Treasure treasure = GameManager.instance.mapGenerator.GetTargetElement(item.pos) as Treasure;
+                if(treasure !=null)
+                    treasure.AddTools();
                 GameManager.instance.mapGenerator.ReplaceElement(item.pos, ElementType.Land, item.state);
                 continue;
             }
@@ -88,10 +91,11 @@ public class Land : Element
                 {
                     continue;
                 }
-                else if(reasonType == ElementType.Bomb || reasonType == ElementType.Fuel)
+                if (reasonType == ElementType.Fuel || reasonType == ElementType.Bomb)
                 {
-                    Wood wood = item as Wood;
-                    wood.BeEffected(wood, reasonType);
+                    Wood wood = GameManager.instance.mapGenerator.GetTargetElement(item.pos) as Wood;
+                    if(wood !=null)
+                        wood.BeEffected(wood, reasonType);
                     continue;
                 }
             }

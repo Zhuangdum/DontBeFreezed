@@ -41,9 +41,9 @@ public class Fuel : Element
                 }
                 else
                 {
-                    //other
-                    Fuel fuel = item as Fuel;
-                    fuel.BeEffected(fuel, ElementType.Fuel);
+                    Fuel fuel = GameManager.instance.mapGenerator.GetTargetElement(item.pos) as Fuel;
+                    if(fuel !=null)
+                        fuel.BeEffected(fuel, ElementType.Fire);
                     continue;
                 }
             }
@@ -57,15 +57,17 @@ public class Fuel : Element
             }
             if (item.type == ElementType.Treasure)
             {
-                Treasure treasure = item as Treasure;
-                treasure.AddTools();
+                Treasure treasure = GameManager.instance.mapGenerator.GetTargetElement(item.pos) as Treasure;
+                if(treasure !=null)
+                    treasure.AddTools();
                 GameManager.instance.mapGenerator.ReplaceElement(item.pos, ElementType.Land, item.state);
                 continue;
             }
             if (item.type == ElementType.Wood)
             {
-                Wood wood = item as Wood;
-                wood.BeEffected(wood, ElementType.Fuel);
+                Wood wood = GameManager.instance.mapGenerator.GetTargetElement(item.pos) as Wood;
+                if(wood !=null)
+                    wood.BeEffected(wood, ElementType.Fuel);
                 continue;
             }
             GameManager.instance.mapGenerator.ReplaceElement(item.pos, ElementType.Land, item.state);

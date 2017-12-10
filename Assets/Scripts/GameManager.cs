@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     public MapGenerator mapGenerator;
 
     public UIManager uiManager;
+    
+    public EffectManager effectManager;
 
     public Dictionary<ElementType, int> tools;
     public int fireCount {
