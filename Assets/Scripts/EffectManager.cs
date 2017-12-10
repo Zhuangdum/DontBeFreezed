@@ -34,7 +34,7 @@ public class EffectManager : MonoBehaviour
         go.transform.position = targetPos;
         if (parList.ContainsKey(targetPos))
         {
-            return go;
+            return null;
         }
         
         parList.Add(targetPos, go);

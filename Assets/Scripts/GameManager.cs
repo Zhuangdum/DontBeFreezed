@@ -21,6 +21,9 @@ public class GameManager : MonoBehaviour
     public UIManager uiManager;
     
     public EffectManager effectManager;
+    
+    public Sprite snowland;
+    public Sprite grassland;
 
     public Dictionary<ElementType, int> tools;
     public int fireCount {

@@ -22,6 +22,19 @@ public class MapGenerator : MonoBehaviour
 
     public string mapName;
 
+    
+
+    private void Awake()
+    {
+//        snowland = Resources.Load<Texture2D>("Assets/sprite/xuedi_00.png");
+//        grassland = Resources.Load<Texture2D>("Assets/sprite/caodi_00");
+//        if (grassland == null)
+//        {
+//            Debug.logger.Log("fuck123");
+//        }
+        
+    }
+
     private void Start()
     {
         var datas = csvConvert.loadMap(string.Format("Assets/CSV/{0}.csv", mapName));
@@ -51,10 +64,12 @@ public class MapGenerator : MonoBehaviour
                 GameObject go = Instantiate(config.prefab, map.transform);
                 go.transform.position = tempPos;
                 go.GetComponent<SpriteRenderer>().color = config.color;
+                go.GetComponent<SpriteRenderer>().sortingOrder = 50 - (int)tempPos.y;
                 var ui = go.GetComponentInChildren<Text>();
                 ui.text = string.Format("{0}{1}", tempPos.x, tempPos.y);
                 ui.enabled = false;
                 Element element = go.GetComponent<Element>();
+                
                 element.pos = tempPos;
                 element.state = GetState(type);
 
@@ -348,8 +363,11 @@ public class MapGenerator : MonoBehaviour
             {
                 if (mapDic[key].type == ElementType.Land)
                 {
-                    Color color = mapDic[key].GetComponent<SpriteRenderer>().material.color;
-                    mapDic[key].GetComponent<SpriteRenderer>().material.color = new Color(color.r, color.g, color.b, 0.25f);
+                    //Color color = mapDic[key].GetComponent<SpriteRenderer>().material.color;
+                    //mapDic[key].GetComponent<SpriteRenderer>().material.color = new Color(color.r, color.g, color.b, 0.25f);
+                 
+                    mapDic[key].GetComponent<SpriteRenderer>().sprite = GameManager.instance.grassland;
+                    mapDic[key].GetComponent<SpriteRenderer>().sortingOrder = 50 - (int)mapDic[key].pos.y;
                 }
             }
         }
