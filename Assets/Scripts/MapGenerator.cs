@@ -20,25 +20,18 @@ public class MapGenerator : MonoBehaviour
 
     private Dictionary<Vector2, Element> mapDic = new Dictionary<Vector2, Element>();
 
-    public string mapName;
-
-    
-
     private void Awake()
     {
-//        snowland = Resources.Load<Texture2D>("Assets/sprite/xuedi_00.png");
-//        grassland = Resources.Load<Texture2D>("Assets/sprite/caodi_00");
-//        if (grassland == null)
-//        {
-//            Debug.logger.Log("fuck123");
-//        }
-        
     }
 
-    private void Start()
+    public void GenerateMap(string name)
     {
-        var datas = csvConvert.loadMap(string.Format("Assets/CSV/{0}.csv", mapName));
+        if(map !=null)
+            Destroy(map);
+        mapDic.Clear();
 
+        //reset data
+        var datas = csvConvert.loadMap(string.Format("Assets/CSV/{0}.csv", name));
         bounds = new Vector2(row, column);
         map = new GameObject("Map");
         for (int x = column - 1; x >= 0; x--)

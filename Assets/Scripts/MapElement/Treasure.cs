@@ -20,18 +20,18 @@ public class Treasure : Element
         int random = Random.Range(0, 3);
         if (random == 0)
         {
-            GameManager.instance.tools[ElementType.Fire] += 2;
-            GameManager.instance.effectManager.PlayTextAnimation(this.pos, "篝火 +2");
+            GameManager.instance.tools[ElementType.Fire] += 1;
+            GameManager.instance.effectManager.PlayTextAnimation(this.pos, 1);
         }
         else if (random == 1)
         {
-            GameManager.instance.tools[ElementType.Fuel] += 2;
-            GameManager.instance.effectManager.PlayTextAnimation(this.pos, "燃料 +2");
+            GameManager.instance.tools[ElementType.Fuel] += 1;
+            GameManager.instance.effectManager.PlayTextAnimation(this.pos, 2);
         }
         else
         {
-            GameManager.instance.tools[ElementType.Bomb] += 2;
-            GameManager.instance.effectManager.PlayTextAnimation(this.pos, "炸弹 +2");
+            GameManager.instance.tools[ElementType.Bomb] += 1;
+            GameManager.instance.effectManager.PlayTextAnimation(this.pos, 3);
         }
 
         GameManager.instance.SetUIDirty();

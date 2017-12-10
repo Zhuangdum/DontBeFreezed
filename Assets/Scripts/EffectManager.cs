@@ -24,6 +24,7 @@ public class EffectManager : MonoBehaviour
                 ParticleSystem temParticle = GetEffect(item.pos);
                 if(temParticle!=null)
                     temParticle.Play();
+//                GameManager.instance.mapGenerator.GetTargetElement(item.pos).PlayEffect();
             }
         }
     }
@@ -48,15 +49,21 @@ public class EffectManager : MonoBehaviour
 
     public Animator textPrefab;
     private Animator animator;
-    public void PlayTextAnimation(Vector2 targetPos, string content)
+
+    public Sprite bombSprite;
+    public Sprite fuelSprite;
+    public Sprite fireSprite;
+    public void PlayTextAnimation(Vector2 targetPos, int type)
     {
-        if (animator != null)
-        {
-            animator.GetComponentInChildren<Text>().text = content;
-            return;
-        }
         animator = Instantiate(textPrefab);
-        textPrefab.GetComponentInChildren<Text>().text = content;
+        Image image = textPrefab.GetComponentInChildren<Image>();
+        image.sprite = null;
+        if(type == 1)
+            image.sprite = bombSprite;
+        else if(type == 2)
+            image.sprite = fuelSprite;
+        else
+            image.sprite = fireSprite;
         animator.transform.position = targetPos;
     }
 }

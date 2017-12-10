@@ -15,8 +15,11 @@ public class EffectController : MonoBehaviour
     {
         if (type == ElementType.Bomb)
         {
-            GameManager.instance.effectManager.RemoveElement(GetComponent<Element>().pos);
+            gameObject.SetActive(false);
         }
-        GameObject.Destroy(this.gameObject);
+        else
+        {
+            GameObject.Destroy(this.gameObject);
+        }
     }
 }

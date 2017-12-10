@@ -44,11 +44,20 @@ public class GameManager : MonoBehaviour
             uiManager.bombText.text = tools[ElementType.Bomb].ToString();
         }
     }
+
+    public bool interactable = false;
     private void Awake()
     {
         instance = this;
-        
         tools = new Dictionary<ElementType, int>();
+    }
+
+
+    public void LoadMap(string name)
+    {
+        mapGenerator.GenerateMap(name);
+        
+        tools.Clear();
         tools.Add(ElementType.Fire, fireNum);
         tools.Add(ElementType.Fuel, fuelNum);
         tools.Add(ElementType.Bomb, bombNum);
@@ -57,7 +66,7 @@ public class GameManager : MonoBehaviour
         lastHandType = ElementType.Fire;
         
         //set ui
-        uiManager.Init();
+        uiManager.InitTools();
         SetUIDirty();
     }
 
@@ -71,6 +80,8 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (!interactable)
+            return;
         showPoint2Land();
         if (Input.GetMouseButtonDown(0))
         {
@@ -90,7 +101,6 @@ public class GameManager : MonoBehaviour
                 Element clickedElement = hitInfo.collider.GetComponent<Element>();
                 if (clickedElement.type == ElementType.Trap)
                 {
-                    Debug.LogError("you clicked a trap, pos : " + clickedElement.pos);
                     return;
                 }
                 else if (clickedElement.type == ElementType.Land)
@@ -100,7 +110,6 @@ public class GameManager : MonoBehaviour
                         Land land = clickedElement as Land;
                         if (land == null)
                         {
-                            Debug.LogError("xxxx");
                             return;
                         }
                         
@@ -130,7 +139,8 @@ public class GameManager : MonoBehaviour
                 Element clickedElement = hitInfo.collider.GetComponent<Element>();
                 if (clickedElement.type == ElementType.Trap)
                 {
-                    Debug.LogError("you clicked a trap, pos : " + clickedElement.pos);
+                    Trap trap = clickedElement as Trap;
+                    trap.ShowTrap();
                     return;
                 }
                 else if(clickedElement.type == ElementType.Land)

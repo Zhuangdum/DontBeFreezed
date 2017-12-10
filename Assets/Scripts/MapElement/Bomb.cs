@@ -83,4 +83,5 @@ public class Bomb : Element
             GameManager.instance.mapGenerator.ReplaceElement(item.pos, ElementType.Land, item.state);
         }
     }
+    
 }

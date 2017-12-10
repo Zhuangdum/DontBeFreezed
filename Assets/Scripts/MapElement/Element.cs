@@ -74,7 +74,14 @@ public class Element : MonoBehaviour
             item.GetComponent<Element>().type = ElementType.Land;
         }
     }
+    
+    public ParticleSystem particleSystem;
 
+    public void PlayEffect()
+    {
+        particleSystem.gameObject.SetActive(true);
+        particleSystem.Play();
+    }
 }
 
 

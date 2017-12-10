@@ -11,7 +11,17 @@ public class UIManager : MonoBehaviour
     public Text fuelText;
     public Text bombText;
 
-    public void Init()
+    public GameManager gamanager;
+    public GameObject panel;
+    
+    public void StartGame()
+    {
+        panel.gameObject.SetActive(false);
+        GameManager.instance.LoadMap(mapName);
+    }
+
+
+    public void InitTools()
     {
         handType = ElementType.Fire;
         HideChoice();
@@ -38,29 +48,51 @@ public class UIManager : MonoBehaviour
         Debug.Log("set handitem to: "+ type);
     }
 
-    public GameObject choicePanel;
-
-    public void Confirm()
+    public string mapName = "map_easy";
+    public void RestartGame()
     {
-        //TODO
-        
-        HideChoice();
+        GameManager.instance.LoadMap(mapName);
     }
 
-    public void Cancel()
+    public void GameMenu()
+    {
+        ShowChoice();
+    }
+
+    public GameObject choicePanel;
+
+    public void LevelEasy()
     {
         //TODO
-        
         HideChoice();
+        mapName = "map_easy";
+        GameManager.instance.LoadMap("map_easy");
+    }
+
+    public void LevelNormal()
+    {
+        //TODO
+        HideChoice();
+        mapName = "map_test";
+        GameManager.instance.LoadMap("map_boom");
+    }
+    public void LevelHard()
+    {
+        //TODO
+        HideChoice();
+        mapName = "map_hard";
+        GameManager.instance.LoadMap("map_hard");
     }
 
     public void ShowChoice()
     {
+        GameManager.instance.interactable = false;
         choicePanel.SetActive(true);
     }
 
     public void HideChoice()
     {
+        GameManager.instance.interactable = true;
         choicePanel.SetActive(false);
     }
 }
