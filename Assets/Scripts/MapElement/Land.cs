@@ -21,7 +21,7 @@ public class Land : Element
             List<Element> list3x3 = GameManager.instance.mapGenerator.GetNearbyBlock3x3(sourceElement.pos);
             if (list3x3.Find(s => s.type == ElementType.Fire) == null)
             {
-                GameManager.instance.mapGenerator.ReplaceElement(sourceElement.pos, ElementType.Land, ElementState.Warm);
+                GameManager.instance.mapGenerator.ReplaceElement(sourceElement.pos, ElementType.Fuel, ElementState.Other);
                 return;
             }
         }
@@ -31,7 +31,7 @@ public class Land : Element
             List<Element> list3x3 = GameManager.instance.mapGenerator.GetNearbyBlock3x3(sourceElement.pos);
             if (list3x3.Find(s => s.type == ElementType.Fire) == null)
             {
-                GameManager.instance.mapGenerator.ReplaceElement(sourceElement.pos, ElementType.Land, ElementState.Warm);
+                GameManager.instance.mapGenerator.ReplaceElement(sourceElement.pos, ElementType.Bomb, ElementState.Other);
                 return;
             }
         }

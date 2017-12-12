@@ -73,15 +73,15 @@ public class UIManager : MonoBehaviour
     {
         //TODO
         HideChoice();
-        mapName = "map_test";
-        GameManager.instance.LoadMap("map_boom");
+        mapName = "map_hard";
+        GameManager.instance.LoadMap("map_hard");
     }
     public void LevelHard()
     {
         //TODO
         HideChoice();
-        mapName = "map_hard";
-        GameManager.instance.LoadMap("map_hard");
+        mapName = "map_boom";
+        GameManager.instance.LoadMap("map_boom");
     }
 
     public void ShowChoice()

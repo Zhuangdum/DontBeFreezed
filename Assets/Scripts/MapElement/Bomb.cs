@@ -20,7 +20,7 @@ public class Bomb : Element
         {
             if (item.pos == this.pos)
             {
-                GameManager.instance.mapGenerator.ReplaceElement(item.pos, ElementType.Land, ElementState.Other);
+                GameManager.instance.mapGenerator.ReplaceElement(item.pos, ElementType.Land, ElementState.Warm);
                 continue;
             }
             if (item.type == ElementType.Trap)

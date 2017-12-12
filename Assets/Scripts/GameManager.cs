@@ -29,19 +29,28 @@ public class GameManager : MonoBehaviour
     public int fireCount {
         set
         {
-            uiManager.fireText.text = tools[ElementType.Fire].ToString();
+            if(value<=0)
+                uiManager.fireText.text = 0.ToString();
+            else
+                uiManager.fireText.text = tools[ElementType.Fire].ToString();
         }
     }
     public int fuelCount {
         set
         {
-            uiManager.fuelText.text = tools[ElementType.Fuel].ToString();
+            if(value<=0)
+                uiManager.fuelText.text = 0.ToString();
+            else
+                uiManager.fuelText.text = tools[ElementType.Fuel].ToString();
         }
     }
     public int boombCount {
         set
         {
-            uiManager.bombText.text = tools[ElementType.Bomb].ToString();
+            if(value<=0)
+                uiManager.bombText.text = 0.ToString();
+            else
+                uiManager.bombText.text = tools[ElementType.Bomb].ToString();
         }
     }
 
@@ -73,9 +82,9 @@ public class GameManager : MonoBehaviour
     public void SetUIDirty()
     {
         //set ui dirty
-        fireCount = 0;
-        fuelCount = 0;
-        boombCount = 0;
+        fireCount = tools[ElementType.Fire];
+        fuelCount = tools[ElementType.Fuel];
+        boombCount = tools[ElementType.Bomb];
     }
 
     private void Update()
@@ -133,20 +142,21 @@ public class GameManager : MonoBehaviour
         {
             if (hitInfo.collider.CompareTag("Rock"))
             {
-                Element clickedElement = hitInfo.collider.GetComponent<Element>();
-                if (clickedElement.type == ElementType.Trap)
+                tools[uiManager.handType]--;
+                SetUIDirty();
+
+                if (tools.ContainsKey(uiManager.handType) && tools[uiManager.handType] > 0)
                 {
-                    Trap trap = clickedElement as Trap;
-                    trap.ShowTrap();
-                    AudioSource.PlayClipAtPoint(AudioManager.instance.trapClip, new Vector3(0,0,0));
-                    return;
-                }
-                else if(clickedElement.type == ElementType.Land)
-                {
-                        
-                    if (tools.ContainsKey(uiManager.handType) && tools[uiManager.handType] > 0)
+                    Element clickedElement = hitInfo.collider.GetComponent<Element>();
+                    if (clickedElement.type == ElementType.Trap)
                     {
-                        
+                        Trap trap = clickedElement as Trap;
+                        trap.ShowTrap();
+                        AudioSource.PlayClipAtPoint(AudioManager.instance.trapClip, new Vector3(0,0,0));
+                        return;
+                    }
+                    else if(clickedElement.type == ElementType.Land)
+                    {
                         Land land = clickedElement as Land;
                         if (land == null)
                         {
@@ -155,18 +165,16 @@ public class GameManager : MonoBehaviour
                         }
                         
                         land.BeEffected(land, uiManager.handType);
-                        tools[uiManager.handType]--;
-                        SetUIDirty();
                         Debug.Log(" 使用道具类型： "+ uiManager.handType+"  道具数量： "+tools[uiManager.handType]);
                     }
                     else
                     {
-                        Debug.Log(" 道具数量不足 "+ uiManager.handType);
+                        Debug.Log("this place already have something");
                     }
                 }
                 else
                 {
-                    Debug.Log("this place already have something");
+                    Debug.Log(" 道具数量不足 "+ uiManager.handType);
                 }
             }
         }
